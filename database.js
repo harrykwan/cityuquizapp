@@ -1,4 +1,16 @@
 var mydata = [{
+	id: "trial",
+	name: "試玩",
+	readme: "Let's try",
+	questions: ['Rate for this app'],
+	answer: ['bad','can be better','fair','quite good','very good'],
+	calculate: [{
+		id: "A",
+		name: "Your score",
+		marksorder: [0],
+		questions: [1]
+	}]
+},{
 	id: "myquiz1",
 	name: "人格測試一",
 	readme: "在這個測試裡，有一些形容人們性格的短句。在每一短句之後，有五個選擇。請在五個選擇中，選取最能確切形容你現時的感受和行為。這不是測驗，並沒有所謂正確的答案。請你回答所有問題。",
