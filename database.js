@@ -2,13 +2,13 @@ var mydata = [{
 	id: "trial",
 	name: "試玩",
 	readme: "Let's try",
-	questions: ['Rate for this app'],
+	questions: ['Rate for this app','Rate for today','Rate for yourself'],
 	answer: ['bad','can be better','fair','quite good','very good'],
 	calculate: [{
 		id: "A",
 		name: "Your score",
-		marksorder: [0],
-		questions: [1]
+		marksorder: [0,0,0],
+		questions: [1,2,3]
 	}]
 },{
 	id: "myquiz1",
