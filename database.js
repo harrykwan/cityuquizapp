@@ -20,7 +20,7 @@ var mydata = [{
 		id: "A",
 		name: "Agreeableness",
 		marksorder: [4,4,4,4,0,0,0,0,0,0],
-		questions: [4,2,12,22,32,7,17,27,37,42,47]
+		questions: [2,12,22,32,7,17,27,37,42,47]
 	},{
 		id: "C",
 		name: "Conscientiousness",
