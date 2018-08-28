@@ -35,7 +35,7 @@ var mydata = [{
 		questions: [6,16,26,36,46,1,11,21,31,41]
 	},{
 		id: "N",
-		name: "Neuroticism/Emotional Instability",
+		name: "Emotional Instability",
 		marksorder: [4,4,0,0,0,0,0,0,0,0],
 		questions: [9,19,4,14,24,29,34,39,44,49]
 	},{
