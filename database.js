@@ -41,7 +41,7 @@ var mydata = [{
 	},{
 		id: "O",
 		name: "Openness to experience",
-		marksorder: [0,0,0,4,4,4,4,4,4,4 ],
+		marksorder: [0,0,0,4,4,4,4,4,4,4],
 		questions: [10,20,30,5,15,25,35,40,45,50]
 	}]
 }];
