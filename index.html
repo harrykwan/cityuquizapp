@@ -36,6 +36,13 @@
       table{
         width: 80%;
       }
+
+      button{
+        font-size: 20px;
+        padding: 10px;
+        background-color: white;
+        border-radius: 10px;
+      }
     </style>
   </head>
   <body>
@@ -126,6 +133,11 @@
     function updateSignInStatus(isSignedIn) {
       if (isSignedIn) {
         makeApiCall();
+        document.getElementById("signout-button").hidden = false;
+        document.getElementById("signin-button").hidden = true;
+      } else {
+        document.getElementById("signout-button").hidden = true;
+        document.getElementById("signin-button").hidden = false;
       }
     }
 
@@ -144,7 +156,7 @@
       onreadystatechange="if (this.readyState === 'complete') this.onload()">
     </script>
     <div id="myshowsheet"></div>
-    <!-- <button id="signin-button" onclick="handleSignInClick()">Sign in</button> -->
-    <!-- <button id="signout-button" onclick="handleSignOutClick()">Sign out</button> -->
+    <button hidden id="signin-button" onclick="handleSignInClick()">Sign in</button>
+    <button hidden id="signout-button" onclick="handleSignOutClick()">Sign out</button>
   </body>
 </html>
