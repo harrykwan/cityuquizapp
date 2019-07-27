@@ -1,162 +1,642 @@
-<!-- <html>
-<head>
-</head>
-<body>
-	<script src="https://apis.google.com/js/api.js"></script>
-	<script>
-	function start() {
-	  // 2. Initialize the JavaScript client library.
-	  gapi.client.init({
-	    'apiKey': 'AIzaSyCgqyzrRe2dLa676z725MRVHYhkdQ86A30',
-	    // Your API key will be automatically added to the Discovery Document URLs.
-	    'discoveryDocs': ['https://people.googleapis.com/$discovery/rest'],
-	    // clientId and scope are optional if auth is not required.
-	    'clientId': '531417626263-6breo4rq95npc1c9t9ip9cjud10oggdp.apps.googleusercontent.com',
-	    'scope': 'https://www.googleapis.com/auth/spreadsheets',
-	  }).then(function() {
-	    // 3. Initialize and make the API request.
-	    return gapi.client.people.people.get({
-	      'resourceName': 'people/me',
-	      'requestMask.includeField': 'person.names'
-	    });
-	  }).then(function(response) {
-	    console.log(response.result);
-	  }, function(reason) {
-	    console.log('Error: ' + reason.result.error.message);
-	  });
-	};
-	// 1. Load the JavaScript client library.
-	gapi.load('client', start);
-	</script>
-</body>
-</html> -->
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
 <html>
-  <head>
-    <style type="text/css">
-      table{
-        width: 80%;
-      }
-
-      button{
-        font-size: 20px;
-        padding: 10px;
-        background-color: white;
-        border-radius: 10px;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="showarea"></div>
-    <!--
-    BEFORE RUNNING:
-    ---------------
-    1. If not already done, enable the Google Sheets API
-       and check the quota for your project at
-       https://console.developers.google.com/apis/api/sheets
-    2. Get access keys for your application. See
-       https://developers.google.com/api-client-library/javascript/start/start-js#get-access-keys-for-your-application
-    3. For additional information on authentication, see
-       https://developers.google.com/sheets/api/quickstart/js#step_2_set_up_the_sample
-    -->
-    <script type="text/javascript" src="https://harrykwan.github.io/cityuquizapp/database.js">
-    </script>
-
-    <script>
-    var myresult;
-    function makeApiCall() {
-      var params = {
-        // The ID of the spreadsheet to retrieve data from.
-        spreadsheetId: '16CHfKr1fGNoHbtrKIqt-FZHqoMYmeMWS6ECFrPjgFWI',//'1DyjIJd6b5hXbNOGTmdTZTMwVc0GPqrlVkx-YKsoc41g',  // TODO: Update placeholder value.
-
-        // The A1 notation of the values to retrieve.
-        range: 'A1:Z1000',//'A1:Z1000',  // TODO: Update placeholder value.
-
-        // How values should be represented in the output.
-        // The default render option is ValueRenderOption.FORMATTED_VALUE.
-        valueRenderOption: 'FORMATTED_VALUE',  // TODO: Update placeholder value.
-
-        // How dates, times, and durations should be represented in the output.
-        // This is ignored if value_render_option is
-        // FORMATTED_VALUE.
-        // The default dateTime render option is [DateTimeRenderOption.SERIAL_NUMBER].
-        dateTimeRenderOption: 'SERIAL_NUMBER',  // TODO: Update placeholder value.
-      };
-
-      var request = gapi.client.sheets.spreadsheets.values.get(params);
-      request.then(function(response) {
-        // TODO: Change code below to process the `response` object:
-        console.log(response.result);
-        myresult = response.result;
-        var myshowarea = document.getElementById("showarea");
-        for (var j=0; j<mydata.length; j++){
-          if (j>0) myshowarea.innerHTML += '<hr>';
-          myshowarea.innerHTML += "<h1>"+mydata[j].name+"</h1>"+"<div id="+mydata[j].id+"></div>";
-        }
-        // document.getElementById("myshowsheet").innerHTML = '';
-        for (var j=1; j<myresult.values.length; j++){
-        	//document.getElementById("myshowsheet").innerHTML += myresult.values[j]+'<br>';
-          console.log(myresult.values[j][2].split(",")[4]);
-          document.getElementById(myresult.values[j][2].split(",")[4]).innerHTML += '<table><tbody><tr><td>Name:</td><td>'+myresult.values[j][2].split(",")[0]+'</td></tr><tr><td>SID:</td><td>'+myresult.values[j][2].split(",")[1]+'</td></tr><tr><td>Email:</td><td>'+myresult.values[j][2].split(",")[2]+'</td></tr><tr><td>Phone Num:</td><td>'+myresult.values[j][2].split(",")[3]+'</td></tr><tr><td>Submit Time:</td><td>'+myresult.values[j][0]+'</td></tr><tr><td>Response:</td><td>'+myresult.values[j][1]+'</td></tr></tbody></table><br><br>';
-        }
+    <head>
+        <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+        <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;"> -->
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+        <script src="js/jquery.min.js"></script>
+        <script src="https://harrykwan.github.io/cityuquizapp/database.js"></script>
+        <!-- <script src="temp.js"></script> -->
+        <!-- <script src="js/database.js" charset="UTF-8"></script> -->
+        <title>The Quiz</title>
+    </head>
+    <body>
         
-      }, function(reason) {
-        console.error('error: ' + reason.result.error.message);
-      });
-    }
+        <div id="startpage"><div id="welcomespan">Welcome</div><div style="font-size: 18px;">click anywhere to continue</div></div>
+        <div id="firsttimediv" hidden>
+            <div class="topbar"><b>Welcome</b></div>
+            <div style="font-size: 16px;" class="mybox2">We would like to have your personal information only for research purpose.</div>
+            <div style="font-size: 16px;" class="mybox2">
+                Your Name:<br>
+                <input id="username" type="text"><br><br>
+                Your EID/SID:<br>
+                <input id="userid" type="text"><br><br>
+                Your Email:<br>
+                <input id="useremail" type="text"><!-- <br><br> -->
+                <!-- Your Phone Number:<br> -->
+                <input hidden id="userphonenumer" type="text" value="NA"><br>
+            </div>
+            <div onclick="saveuserdata()" class="mybox2" style="font-size: 16px;">DONE</div>
+        </div>
+        <div id="all" hidden>
+            <div id="topbar" class="topbar" onclick="imadmin()"><b>THE QUIZ @ CITYU</b></div>
+            <div id="quizlist" class="quizlist">
+                <!-- <div class="mybox" style="font-size: 20px;" id="myquiz1" onclick="startquiz(this.id)">人格測試一</div> -->
+                <!-- <div class="mybox" id="testing" ><h1>Testing</h1></div> -->
+            </div>
+            <div hidden id="dataarea">
+                <div id="questionarea"></div>
+                <div id="answerarea" hidden>
+                    <!-- <div class="slidecontainer">
+                        <span class="sliderspanleft">X</span><input type="range" min="0" max="4" value="2" class="slider" id="myRange"><span class="sliderspanright">✓</span>
+                        <div id="rangeresult"></div>
+                    </div> -->
+                </div>
+                <input type="text" id="answerfill" value='' hidden>
+                <button onclick="gobutton()" class="gobutton menubutton" hidden>開始</button>
+                <button id="backbutton" class="backbutton" hidden>上一頁</button>
+                <!-- <div id="myprogress" class="myprogress" hidden>
+                    <div id="myprogressbar" class="myprogressbar"></div>
+                </div> -->
+                <button id="progressbutton" class="submitbutton" hidden></button>
+                <button id="submitbutton" class="submitbutton" hidden>提交</button>
+                <button id="nextbutton" class="nextbutton" hidden>下一頁</button>
+            </div>
+            <div hidden id="mysendingmessage" class="mybox2">正在傳送資料。。。</div>
+        </div>
+        <!-- <script type="text/javascript" src="cordova.js"></script> -->
+        <!-- <script type="text/javascript" src="js/index.js"></script> -->
 
-    function initClient() {
-      var API_KEY = 'AIzaSyCgqyzrRe2dLa676z725MRVHYhkdQ86A30';  // TODO: Update placeholder with desired API key.
+        <form hidden id="googleform" action="https://docs.google.com/forms/d/e/1FAIpQLSee2bjwYz57cjVhSOJtYIwzPl4IqU1ZT3uCvygjLJpHi12pgA/formResponse" target="googleframe" method="POST">
+            <input id="sidsubmit" type="text" name="entry.1868569532">
+            <input id="answersubmit" type="text" name="entry.1988038923">
+            <input type="submit" value="Submit">
+        </form>
+        <iframe hidden name="googleframe" id="i_frame"></iframe>
+        
+        <script type="text/javascript">
+            var nowfullpath;
+            var nowreadfile;
+            var nowfileentry;
+            var firsttime;
+            var nowquizid;
+            var nowdata=-1;
+   
 
-      var CLIENT_ID = '531417626263-6breo4rq95npc1c9t9ip9cjud10oggdp.apps.googleusercontent.com';  // TODO: Update placeholder with desired client ID.
 
-      // TODO: Authorize using one of the following scopes:
-      //   'https://www.googleapis.com/auth/drive'
-      //   'https://www.googleapis.com/auth/drive.file'
-      //   'https://www.googleapis.com/auth/spreadsheets'
-      var SCOPE = 'https://www.googleapis.com/auth/spreadsheets';
+                    // Handle the back button
+                    function onConfirm(button) {
+                        if (button==1){
+                            $("#answerarea").hide();
+                            // document.getElementById("rangeresult").innerHTML = mydata[nowdata].answer[answerfill.value];
+                            document.getElementById("backbutton").hidden = true;
+                            document.getElementById("nextbutton").hidden = true;
+                            document.getElementById("progressbutton").hidden = true;
+                            document.getElementById("submitbutton").hidden = true;
+                            $('#topbar').hide();
+                            $('#dataarea').hide();
+                            checkdoneallquiz();
+                            // document.getElementById("topbar").innerHTML = '<b>THE QUIZ @ CITYU</b><div style="font-size:15px; margin-top:10px;"><br>hello '+ nowuser[0] + '</div>';
+                            starttopbar();
+                            $('#topbar').delay(200).slideDown();
+                            $('#quizlist').delay(200).slideDown();
+                            answerfill.value = -1;
+                            setlabel(-1)
+                            nowdata = -1;
+                        }
+                    }
 
-      gapi.client.init({
-        'apiKey': API_KEY,
-        'clientId': CLIENT_ID,
-        'scope': SCOPE,
-        'discoveryDocs': ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
-      }).then(function() {
-        gapi.auth2.getAuthInstance().isSignedIn.listen(updateSignInStatus);
-        updateSignInStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-      });
-    }
 
-    function handleClientLoad() {
-      gapi.load('client:auth2', initClient);
-    }
+                    if (nowdata>-1){
+                        showConfirm();
+                    } else {
+                        $('#topbar').hide();
+                        $('#dataarea').hide();
+                        // document.getElementById("topbar").innerHTML = '<b>THE QUIZ @ CITYU</b><div style="font-size:15px; margin-top:10px;"><br>hello '+ nowuser[0] + '</div>';
+                        starttopbar();
+                        $('#topbar').delay(200).slideDown();
+                        $('#quizlist').delay(200).slideDown();
+                    }
 
-    function updateSignInStatus(isSignedIn) {
-      if (isSignedIn) {
-        makeApiCall();
-        document.getElementById("signout-button").hidden = false;
-        document.getElementById("signin-button").hidden = true;
-      } else {
-        document.getElementById("signout-button").hidden = true;
-        document.getElementById("signin-button").hidden = false;
-      }
-    }
 
-    function handleSignInClick(event) {
-      gapi.auth2.getAuthInstance().signIn();
-    }
+            function onErrorCreateFile(){
+                alert('error create file');
+            }
 
-    function handleSignOutClick(event) {
-      gapi.auth2.getAuthInstance().signOut();
-    }
+            function onErrorLoadFs(){
+                alert('error load fs');
+            }
 
-    handleSignInClick();
-    </script>
-    <script async defer src="https://apis.google.com/js/api.js"
-      onload="this.onload=function(){};handleClientLoad()"
-      onreadystatechange="if (this.readyState === 'complete') this.onload()">
-    </script>
-    <div id="myshowsheet"></div>
-    <button hidden id="signin-button" onclick="handleSignInClick()">Sign in</button>
-    <button hidden id="signout-button" onclick="handleSignOutClick()">Sign out</button>
-  </body>
+            function onErrorReadFile() {
+                alert('error read file');
+            }
+
+            var writefinish = 0;
+
+            function setCookie(cname, cvalue, exdays) {
+              var d = new Date();
+              d.setTime(d.getTime() + (exdays*24*60*60*1000));
+              var expires = "expires="+ d.toUTCString();
+              document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+            }
+
+            function writeFile(fileEntry, dataObj) {
+                // Create a FileWriter object for our FileEntry (log.txt).
+                fileEntry.createWriter(function (fileWriter) {
+
+                    fileWriter.onwriteend = function() {
+                        writefinish = 1;
+                        // alert("Successful file write...");
+                        // readFile(fileEntry);
+                    };
+
+                    fileWriter.onerror = function (e) {
+                        alert("Failed file write: " + e.toString())
+                        console.log("Failed file write: " + e.toString());
+                    };
+
+                    // If data object is not passed in,
+                    // create a new Blob instead.
+                    // alert(dataObj);
+                    if (!dataObj) {
+                        dataObj = new Blob([''], { type: 'text/plain' });
+                    }
+
+                    fileWriter.write(dataObj);
+                });
+            }
+
+            function getCookie(cname) {
+              var name = cname + "=";
+              var decodedCookie = decodeURIComponent(document.cookie);
+              var ca = decodedCookie.split(';');
+              for(var i = 0; i <ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                  c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                  return c.substring(name.length, c.length);
+                }
+              }
+              return "";
+            }
+
+            function readFile(fileEntry) {
+                fileEntry.file(function (file) {
+                    var reader = new FileReader();
+
+                    reader.onloadend = function() {
+                        // console.log("Successful file read: " + this.result);
+                        // alert("Successful file read: " + this.result);
+                        // displayFileData(fileEntry.fullPath + ": " + this.result);
+                        nowfullpath = fileEntry.fullPath;
+                        nowreadfile = this.result;
+                        // alert(nowfullpath+': "'+nowreadfile+'"');
+                        if (this.result==""){
+                            firsttime = 1;
+                        } else {
+                            firsttime = 0;
+                        }
+                    };
+
+                    reader.readAsText(file);
+
+                }, onErrorReadFile);
+            }
+
+            var nowuser;
+            $(document).ready(function(){
+                // $('startpage').fadeOut();
+                // $('#all').fadeIn();
+                document.getElementById("startpage").onclick = function(){
+                    // $('startpage').fadeOut();
+                        
+                        
+                        // nowfullpath = fileEntry.fullPath;
+                        nowreadfile = getCookie("userdata");
+                        // alert(nowfullpath+': "'+nowreadfile+'"');
+                        if (nowreadfile==""){
+                            firsttime = 1;
+                        } else {
+                            firsttime = 0;
+                        }
+
+                            if (mydata){
+                                $("#answerarea").hide();
+                                document.getElementById("quizlist").innerHTML = "";
+                                for (var j=0; j<mydata.length; j++){
+                                    document.getElementById("quizlist").innerHTML += '<div class="mybox2 menubutton" style="font-size: 20px;" id="'+mydata[j].id+'" onclick="startquiz(this.id,'+j+')">'+mydata[j].name+'</div>';
+                                }
+                                document.getElementById("startpage").style.display = "none";
+                                // firsttime = 1;
+                                if (firsttime==1){
+                                    // alert('firsttime');
+                                    $('#firsttimediv').fadeIn();
+                                } else {
+                                    nowuser = nowreadfile.split('|');
+                                    for (var j=4; j<nowuser.length; j++){
+                                        if (nowuser[j]){
+                                            var tempquizid = nowuser[j].split(':')[0];
+                                            document.getElementById(tempquizid).hidden = true;
+                                        }
+                                    }
+                                    checkdoneallquiz();
+                                    // alert(nowuser);
+                                    $('#all').fadeIn();
+                                    // document.getElementById("topbar").innerHTML = document.getElementById("topbar").innerHTML+ '<div style="font-size:15px; margin-top:10px;"><br>hello ' + nowuser[0] + '</div>';
+                                    starttopbar();
+                                }
+                            }
+                  
+                    
+                }
+            })
+
+            function checkdoneallquiz(){
+                // document.body.classList.add('background2');
+                // alert(nowuser);
+                // alert((nowuser.length-4)+','+mydata.length);
+                if (nowuser.length-4==mydata.length){
+                    // document.getElementById("quizlist").innerHTML = "<br><div class='doneallspan'>You have done all the quizzes!</div>";
+                    document.getElementById("quizlist").innerHTML = "<br><div class='doneallspan'>你已完成所有心理測驗</div>";
+                }
+            }
+
+            function startquiz(x,y){
+                // document.body.classList.remove('background2');
+                nowdata = y;
+                nowquizid = x;
+                document.getElementById("answerarea").innerHTML = '';//'<div style="padding-left: 50%">';
+                for (var j=0; j<mydata[nowdata].answer.length; j++){
+                    document.getElementById("answerarea").innerHTML += '<label onclick="" id="label'+j+'" class="container">'+mydata[nowdata].answer[j]+'<input onclick="changeanswer('+j+',this)" name="radio" type="radio"><span class="checkmark"></span></label>';
+                    // alert(document.getElementById("answerarea").innerHTML)
+                }
+                // document.getElementById("answerarea").innerHTML += '</div>';
+                // $('.mybox').slideUp();
+                // $('#topbar').slideUp();
+                $('#quizlist').hide();
+                $('#topbar').hide();
+                document.getElementById("topbar").innerHTML = '<h1>'+document.getElementById(x).innerHTML+'</h1>';
+                $('#topbar').delay(200).slideDown();
+                $('#questionarea').html(mydata[nowdata].readme)
+                $('#dataarea').slideDown();
+                $('.gobutton').show();
+                nowpage = 0;
+                // document.getElementById("myprogressbar").style.width = (nowpage+1)/mydata[nowdata].questions.length*100+"%";
+                document.getElementById("progressbutton").innerHTML = parseInt((nowpage+1)/mydata[nowdata].questions.length*100)+"%";
+            }
+
+            function saveuserdata() {
+                function alertDismissed() {
+                    // do something
+                }
+                var myusername = document.getElementById("username").value;
+                var myuserid = document.getElementById("userid").value;
+                var myuseremail = document.getElementById("useremail").value;
+                var myuserphone = document.getElementById("userphonenumer").value;
+                if (myusername.indexOf(",")!=-1||myuserid.indexOf(",")!=-1||myuseremail.indexOf(",")!=-1||myuserphone.indexOf(",")!=-1){
+                   
+                }
+                 else if (myusername==""||myuserid==""||myuseremail==""||myuserphone==""){
+                //     navigator.notification.alert(
+                //         'Sorry, please in all the blanks, thank you.',  // message
+                //         alertDismissed,         // callback
+                //         'Oppppps:(',            // title
+                //         'OK!'                  // buttonName
+                //     );
+                    alert("Sorry, please in all the blanks, thank you.");
+                }
+
+                 else {
+                    
+                    var tempdata = myusername+'|'+myuserid+'|'+myuseremail+'|'+myuserphone;
+                    var dataObj = new Blob([tempdata], { type: 'text/plain' });
+                    // writeFile(nowfileentry,dataObj);
+                    setCookie("userdata",tempdata)
+                    nowreadfile = tempdata;
+                    nowuser = tempdata.split(',');
+                    $("#firsttimediv").hide();
+                    $("#all").fadeIn();
+                    // document.getElementById("topbar").innerHTML = document.getElementById("topbar").innerHTML+ '<div style="font-size:15px; margin-top:10px;"><br>hello ' + nowuser[0] + '</div>';
+                    starttopbar();
+                }
+            }
+
+            function showquestion() {
+                document.getElementById("questionarea").innerHTML = '<div class="myquestion">'+(nowpage+1)+') '+mydata[nowdata].questions[nowpage]+'</div>';//'<b>'+(nowpage+1)+') '+mydata[nowdata].questions[nowpage]+'</b>';
+            }
+
+            var myanswer = [];
+            var nowpage = 0;
+            var disablebackbutton = 0;
+            function gobutton(){
+                $('.gobutton').hide();
+                nowpage = 0;
+                done = 0;
+                for (var j=0; j<mydata[nowdata].questions.length; j++){
+                    myanswer[j] = -1;
+                }
+                answerfill.value = -1;
+                setlabel(-1);
+                showquestion();
+                // document.getElementById("questionarea").innerHTML = '<div class="myquestion">'+(nowpage+1)+')'+mydata[nowdata].questions[nowpage]+'</div>';//'<b>'+(nowpage+1)+') '+mydata[nowdata].questions[nowpage]+'</b>';
+                $("#answerarea").hide();
+                $("#answerarea").slideDown();
+                document.getElementById("answerarea").hidden = false;
+                // document.getElementById("rangeresult").innerHTML = mydata[nowdata].answer[answerfill.value];
+                // document.getElementById("backbutton").hidden = false;
+                // document.getElementById("nextbutton").hidden = false;
+
+                // document.getElementById("progressbutton").hidden = false;
+                
+                // document.getElementById("submitbutton").hidden = false;
+
+                document.getElementById("backbutton").onclick = function(){
+                    // document.getElementById("nextbutton").hidden = false;
+                    if (nowpage>0){
+                        myanswer[nowpage] = answerfill.value;
+                        nowpage--;
+                        $("#answerarea").hide();
+                        $("#answerarea").slideDown();
+                        // document.getElementById("questionarea").innerHTML = (nowpage+1)+') '+mydata[nowdata].questions[nowpage];
+                        showquestion();
+                        // console.log(myanswer[nowpage]);
+                        // if (myanswer[nowpage]){
+                        answerfill.value = myanswer[nowpage];
+                        setlabel(myanswer[nowpage]);
+                        // }
+
+                        // document.getElementById("myprogressbar").style.width = (nowpage+1)/mydata[nowdata].questions.length*100+"%";
+
+                        // document.getElementById("progressbutton").innerHTML = parseInt((nowpage+1)/mydata[nowdata].questions.length*100)+"%";
+
+                        // document.getElementById("rangeresult").innerHTML = mydata[nowdata].answer[answerfill.value];
+                    } 
+                    // if (nowpage==0){
+                        this.hidden = true;
+                    // }
+                };
+
+                document.getElementById("nextbutton").onclick = function(){
+                    window.setTimeout(function(){
+                        document.getElementById("backbutton").hidden = false;
+                        if (nowpage<mydata[nowdata].questions.length-1){
+                            myanswer[nowpage] = answerfill.value;
+                            nowpage++;
+                            $("#answerarea").hide();
+                            $("#answerarea").slideDown();
+                            // document.getElementById("questionarea").innerHTML = (nowpage+1)+') '+mydata[nowdata].questions[nowpage];
+                            showquestion();
+                            // console.log(myanswer[nowpage]);
+                            // if (myanswer[nowpage]){
+                            answerfill.value = myanswer[nowpage];
+                            setlabel(myanswer[nowpage]);
+                            // }
+
+                            // document.getElementById("myprogressbar").style.width = (nowpage+1)/mydata[nowdata].questions.length*100+"%";
+                            // document.getElementById("progressbutton").innerHTML = parseInt((nowpage+1)/mydata[nowdata].questions.length*100)+"%";
+
+                            // document.getElementById("rangeresult").innerHTML = mydata[nowdata].answer[answerfill.value];
+                            // if (nowpage==mydata[nowdata].questions.length-1){
+                            //     done = 1;
+                            //     document.getElementById("submitbutton").hidden = false;
+                            //     document.getElementById("myprogress").hidden = true;
+                            // }
+                        }
+                        if (nowpage==mydata[nowdata].questions.length-1){
+                            this.hidden = true;
+                        }
+                    },50)
+                    
+                };
+
+                document.getElementById("submitbutton").onclick = function(){
+                    // myanswer[nowpage] = answerfill.value;
+                    // if (checkConnection()=='No network connection'){
+                    //     navigator.notification.alert(
+                    //         'Sorry, please check your internet connection and try again, thank you.',  // message
+                    //         alertDismissed,         // callback
+                    //         'Oppppps:(',            // title
+                    //         'OK!'                  // buttonName
+                    //     );
+                    //     function alertDismissed() {
+                    //         // do something
+                    //     }
+                    // } else
+                     {
+                        if (!done){
+                            // alert('notok');
+                            function alertDismissed() {
+                                // do something
+                            }
+
+                            // navigator.notification.alert(
+                            //     'Please answer all questions before submit, thank you!',  // message
+                            //     alertDismissed,         // callback
+                            //     'Not yet finish :(',            // title
+                            //     'OK!'                  // buttonName
+                            // );
+                            alert("Please answer all questions before submit, thank you!");
+                        } else {
+                            disablebackbutton = 1;
+                            var resulttext = '<div style="text-align: center; margin-bottom: 10px;">測試結果</div><div style="text-align: center;"><table class="allmarks"><tbody>';//<span class="allmarks">';
+                            var tempanswer = '';
+                            for (var j=0; j<myanswer.length; j++){
+                                tempanswer += myanswer[j];
+                            }
+                            for (var j=0; j<mydata[nowdata].calculate.length; j++){
+                                resulttext+='<tr>';
+                                var mymarks = 0;
+                                for (var k=0; k<mydata[nowdata].calculate[j].questions.length; k++){
+                                    if (mydata[nowdata].calculate[j].marksorder[k]){
+                                        mymarks += parseInt(mydata[nowdata].answer.length-myanswer[mydata[nowdata].calculate[j].questions[k]-1]);
+                                    } else {
+                                        mymarks += parseInt(myanswer[mydata[nowdata].calculate[j].questions[k]-1]);
+                                    }
+                                }
+                                resulttext+='<td style="padding-right: 10px;">'+mydata[nowdata].calculate[j].name+':</td> <td class="markspan">'+mymarks+'</td>';//+'/'+parseInt(mydata[nowdata].calculate[j].questions.length*4)+'</span>';
+                                if (j<mydata[nowdata].calculate.length-1){
+                                    // resulttext+='<br>';
+                                }
+                                resulttext+='</tr>';
+                            }
+                            document.getElementById("questionarea").innerHTML = resulttext+'</tbody></table></div>';//</span>';
+                            // alert(document.getElementById("mysendingmessage"));
+                            document.getElementById("mysendingmessage").hidden = false;
+                            //+'<div id="sendresultmessage" class"mybox">Sending result to us, please wait...</div>';
+                            // var iDiv = document.createElement('div');
+                            // iDiv.id = 'sendresultmessage';
+                            // iDiv.className = 'mybox';
+                            // iDiv.innerHTML = 'Sending result to us, please wait...';
+                            // document.getElementById("questionarea").appendChild(iDiv);
+
+                            var tempdata = nowuser.toString()+','+nowquizid+':'+tempanswer;
+                            // alert(tempdata);
+                            var dataObj = new Blob([tempdata], { type: 'text/plain' });
+                            // alert(tempdata);
+                            document.getElementById("sidsubmit").value = nowuser[0]+','+nowuser[1]+','+nowuser[2]+','+nowuser[3]+','+nowquizid;
+                            document.getElementById("answersubmit").value = tempanswer;
+                            document.getElementById("googleform").submit();
+                            writefini0sh=0;
+                            // writeFile(nowfileentry,dataObj);
+                            setCookie(nowfileentry)
+                            nowreadfile = tempdata;
+                            nowuser = tempdata.split(',');
+                            checkdone();
+
+                            $("#answerarea").hide();
+                            // document.getElementById("rangeresult").innerHTML = mydata[nowdata].answer[answerfill.value];
+                            document.getElementById("backbutton").hidden = true;
+                            document.getElementById("nextbutton").hidden = true;
+                            document.getElementById("progressbutton").hidden = true;
+                            document.getElementById("submitbutton").hidden = true;
+                        }
+                    }
+                };
+            }
+
+            var loopcheck, loopcheck2;
+            var senddone = 1, firstin = 0;
+            function checkdone() {
+                loopcheck = setInterval(function(){
+                    var tempframe = document.getElementById("i_frame");
+                    senddone = 1;
+                    firstin = 1;
+                    // console.log(senddone);
+                    // console.log(tempframe.contentDocument);
+                    // console.log(tempframe.contentWindow.location.href);
+                    // alert(tempframe.contentDocument.location);
+                    if (tempframe.contentDocument.location=="about:blank"||tempframe.contentDocument.location==""){
+                        senddone = 0;
+                    }
+                },500);
+                loopcheck2 = setInterval(function(){
+                    if (firstin&&senddone){//&&writefinish){
+                        clearInterval(loopcheck);
+                        clearInterval(loopcheck2);
+                        var tempframe = document.getElementById("i_frame");
+                        // tempframe.src = "";
+                        // alert('ok');
+                        document.getElementById("mysendingmessage").innerHTML = '完成';
+                        document.getElementById("mysendingmessage").onclick = function(){
+                            this.hidden = true;
+                            $('#'+nowquizid).hide();
+                            $('#topbar').hide();
+                            $('#dataarea').hide();
+                            // document.getElementById("topbar").innerHTML = '<b>THE QUIZ @ CITYU</b><div style="font-size:15px; margin-top:10px;"><br>hello '+ nowuser[0] + '</div>';
+                            starttopbar();
+                            $('#topbar').delay(200).slideDown();
+                            $('#quizlist').delay(200).slideDown();
+                            nowdata = -1;
+                            checkdoneallquiz();
+                            disablebackbutton = 0;
+                        }
+                        tempframe.src = "";
+                    }
+                },500);
+            }
+
+            function starttopbar(){
+                document.getElementById("topbar").innerHTML = '<img src="head.png">';
+                // document.getElementById("topbar").innerHTML = '<img src="head.png"><div style="position: absolute; font-size:15px; margin-top:10px;">'+ nowuser[0] + ' 您好</div>';
+            }
+
+
+            // var slider = document.getElementById("myRange");
+            // slider.oninput = function() {
+            //     document.getElementById("rangeresult").innerHTML = mydata[nowdata].answer[this.value];
+            // }
+
+            var answerfill = document.getElementById("answerfill");
+            // var boxjustclick = 0;
+            function changeanswer(x,y){
+                // alert(y.tagName);
+                // boxjustclick = 1;
+                // setTimeout(function(){ boxjustclick = 0; }, 500);
+                if (nowpage<mydata[nowdata].questions.length-1){
+                    // document.getElementById("nextbutton").hidden = false;
+                } else {
+                    document.getElementById("nextbutton").hidden = true;
+                }
+                if (nowpage==mydata[nowdata].questions.length-1){
+                    done = 1;
+                    document.getElementById("submitbutton").hidden = false;
+                    document.getElementById("progressbutton").hidden = true;
+                }
+                answerfill.value = parseInt(x);
+                document.getElementById("nextbutton").click();
+            }
+
+            function setlabel(x){
+                if (x==-1){
+                    for (var j=0; j<mydata[nowdata].answer.length; j++){
+                        document.getElementById("label"+j).getElementsByTagName('input')[0].checked = false;
+                    }
+                    // document.getElementById("backbutton").hidden = true;
+                    document.getElementById("nextbutton").hidden = true;
+                } else {
+                    // document.getElementById("backbutton").hidden = false;
+                    // document.getElementById("nextbutton").hidden = false;
+                    for (var j=0; j<mydata[nowdata].answer.length; j++){
+                        if (j==x){
+                            document.getElementById("label"+j).getElementsByTagName('input')[0].checked = true;
+                        } else {
+                            document.getElementById("label"+j).getElementsByTagName('input')[0].checked = false;
+                        }
+                    }
+                }
+            }
+
+
+            var imadminct = 0;
+            function imadmin() {
+                imadminct++;
+                if (imadminct>10){
+                    var dataObj = new Blob([""], { type: 'text/plain' });
+                    // writeFile(nowfileentry,dataObj);
+                    setCookie("userdata","")
+                    alert("clear all done");
+                }
+            }
+
+            function checkConnection() {
+                var networkState = navigator.connection.type;
+
+                var states = {};
+                states[Connection.UNKNOWN]  = 'Unknown connection';
+                states[Connection.ETHERNET] = 'Ethernet connection';
+                states[Connection.WIFI]     = 'WiFi connection';
+                states[Connection.CELL_2G]  = 'Cell 2G connection';
+                states[Connection.CELL_3G]  = 'Cell 3G connection';
+                states[Connection.CELL_4G]  = 'Cell 4G connection';
+                states[Connection.CELL]     = 'Cell generic connection';
+                states[Connection.NONE]     = 'No network connection';
+
+                return states[networkState];
+            }
+
+        </script>
+    </body>
 </html>
