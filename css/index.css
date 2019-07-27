@@ -1,0 +1,482 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+* {
+    -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+}
+
+@font-face {
+   font-family: myfont;
+   src: url('../setofont.ttf');
+}
+
+input{
+    background-color: #1E1E30/*#50514F*/;
+    color: white/*#3F250B*/;
+    margin: 5px;
+    border: 0px;
+    padding: 5px;
+    /*border-radius: 5px;*/
+}
+
+h1{
+    /*font-size: 40px;*/
+}
+
+.mybox_old {
+    background-color: /*#50514F*/#3F250B;
+    color: #C3B299;
+    opacity: 0.9;
+    /*border-radius: 20px;*/
+    margin: 10%;
+    padding: 5%;
+    text-align: center;
+}
+.mybox {
+    background-color: #1E1E29;
+    color: white;
+    /*opacity: 0.9;*/
+    /*border-radius: 20px;*/
+    margin: 10%;
+    padding: 5%;
+    text-align: center;
+}
+
+.mybox2 {
+    background-color: /*#50514F*//*#1E1E29*/#0B0B19;
+    background-color: #090916;
+    /*color: white;*/
+    color: #DBE5FF;
+    border: 0.4px solid #718792;
+    /*opacity: 0.9;*/
+    /*border-radius: 20px;*/
+    margin: 10%;
+    padding: 5%;
+    text-align: center;
+    border-left: 1px solid #718792;
+    /*border-top: none;
+    border-right: none;
+    border-bottom: none;*/
+    box-shadow: 3px 3px;
+}
+
+.menubutton:hover{
+    background-color: /*#50514F*/#718792;
+    color: /*#1E1E29*/black;
+    background-color: black;
+    color: white;
+}
+
+.menubutton{
+    /*opacity: 0.9;*/
+}
+
+
+.topbar_old{
+    background-color: /*#50514F*/#3F250B;
+    color: #C3B299;
+    text-align: center;
+    font-size: 35px;
+    padding: 10%;
+    border-bottom: 10px solid #0F0F0F; 
+    border-color: black;
+}
+
+.topbar{
+    background-color: #0B0B19/*#1E1E29*//*#718792*/;
+    background-color: #050513;
+    background-color: #090916;
+    color: /*#1E1E29*/white;
+    text-align: center;
+    font-size: 35px;
+    padding: 10%;
+    border-bottom: 1px solid #455a64;
+    /*border-color: white;*/
+    /*border-bottom: 10px solid #1E1E30;*/
+    /*border-top: 10px solid #1E1E30;*/
+    box-shadow: 3px 3px;
+}
+
+.topbar img{
+    filter:invert(100%);
+    width: 30%;
+}
+
+#welcomespan {
+  /*display: inline-block;
+  vertical-align: middle;*/
+  margin-top: 200px;
+  font-weight: bold;
+}
+
+#startpage{
+    /*background-color: #50514F;
+    color: #C3B299;
+    text-align: center;
+    height: 100%;
+    padding-top: 50%;
+    padding-bottom: 50%;
+    margin-top: 20%;
+    font-size: 50px;*/
+    position: fixed; /* Sit on top of the page content */
+    /*display: none;*/ /* Hidden by default */
+    background-color: /*#50514F*//*#3F250B*/1E1E29;
+    text-align: center;
+    color: white;
+    font-size: 50px;
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0; 
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /*background-color: rgba(0,0,0,0.5);*/ /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+}
+
+#dataarea{
+    padding-bottom: 20px;
+    /*padding-left: 10px;*/
+    /*padding-right: 10px;*/
+    padding-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10%;
+    text-align: center;
+    color: white/*#50514F*/;
+    font-size: 25px;
+    /*opacity: 0.9;*/
+    /*background-color: #04040A;*/
+    border: 1px; solid white
+}
+
+.background2{
+    /*position: fixed;
+    height: 100%;
+    width: 100%;*/
+    background-color: #0C0C1C;
+   /* background:url(
+        data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQUlEQVQoU2NkIBIwEqmOAV1hGgMDwywkzXA+2SbidAlJJoLcAQLIbkM2GSwPMxGXYrg4stUwQXR3gm3C5kaspgMAQCUHcTz0KMMAAAAASUVORK5CYII=
+    ) repeat;*/
+}
+
+.quizlist{
+    /*height: 90%;*/
+    /*border: 1px solid white;*/
+    height: 100%;
+}
+
+.myquestion{
+    /*left: 0;*/
+    width: 80%;
+    text-align: left;
+    /*text-align: center;*/
+    display: inline-block;
+    margin-left: 20px;
+    /*position: absolute;*/
+    /*border: 1px solid white;*/
+}
+
+button{
+    font-family: /*myfont;*/'Open Sans', sans-serif;
+    /*background-color: #3F250B;
+    color: #C3B299;*/
+    background-color: /*#C3B299*//*#1E1E29*/#0B0B19;
+    /*color: white;*/
+    color: #DBE5FF;
+    font-size: 20px;
+    padding: 10px;
+    /*margin: 10px;*/
+    /*border: 0px;*/
+    border: 1px solid #718792;
+    box-shadow: 3px 3px #DDDDDD;
+}
+
+*:focus{
+    /*border: 1px solid black;*/
+    outline: none;
+}
+
+.gobutton{
+    /*border-radius: 10px;*/
+    width: 50%;
+    margin: 40px;
+    /*opacity: 0.9;*/
+    /*border: none;*/
+    /*background-color: #0B0B19;
+    border-width: 0.5px;
+    border-left: 3px solid #718792;*/
+    /*border: 1px solid #718792;
+    border-left: 3px solid #718792;
+    border-bottom: none;
+    border-top: none;
+    border-right: none;*/
+    background-color: #090916;
+    border: 0.4px solid #718792;
+    border-left: 1px solid #718792;
+    padding: 10px;
+}
+
+.backbutton{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: /*70px*/20%;
+    /*opacity: 0.7;*/
+    box-shadow: 0px 10px #3F250B;
+    font-size: 15px;
+}
+
+.nextbutton{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: /*70px*/20%;
+    /*opacity: 0.7;*/
+    box-shadow: 0px 10px #3F250B;
+    font-size: 15px;
+}
+
+.submitbutton{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: /*180px*/45%;
+    /*opacity: 0.7;*/
+    box-shadow: 0px 10px #3F250B;
+    font-size: 15px;
+}
+
+.myprogress{
+    position: fixed;
+    bottom: 2px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: /*180px*/43%;
+    height: 42px;
+    /*opacity: 0.7;*/
+    /*border: 5px solid #3F250B;*/
+    padding: 3px;
+    background-color: #3F4C6D;
+    box-shadow: 0px 10px #3F4C6D;
+}
+
+.myprogressbar{
+    width: 0;
+    height: 100%;
+    background-color: #C3B299;
+    text-align: center;
+    font-size: 15px;
+    padding-bottom: 2px;
+    line-height: 40px;
+    color: #3F250B;
+}
+
+h1{
+    font-size: 40px;
+}
+
+body {
+    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+    background-color: #0B0B19/*#C3B299*/;
+    color: white;
+    /*background-image:linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
+    background-image:-webkit-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
+    background-image:-ms-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
+    background-image:-webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #A7A7A7),
+        color-stop(0.51, #E4E4E4)
+    );*/
+    background-attachment:fixed;
+    font-family: 'Open Sans', sans-serif;
+    font-size:12px;
+    height:100%;
+    margin:0px;
+    padding:0px;
+    text-transform:uppercase;
+    width:100%;
+}
+
+#answerarea{
+    margin-top: 20px;
+    /*margin-left: 28%;*/
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    /*width: 50%;*/
+    display: inline-block;
+}
+
+#rangeresult{
+    margin: 34px;
+    color: #3F250B;
+    /*opacity: 0.9;*/
+}
+
+.slidecontainer {
+    width: 100%;
+    color: #3F250B;
+}
+
+.sliderspanleft{
+    /*margin-left: 5px;*/
+    margin-right: 5px;
+}
+
+.sliderspanright{
+    margin-left: 5px;
+    /*margin-right: 5px;*/
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 70%;
+    height: 25px;
+    background: #3F250B;
+    outline: none;
+    /*opacity: 0.9;*/
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    border: 3px solid #3F250B;
+}
+
+.slider:hover {
+    /*opacity: 1;*/
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: #C3B299;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: #C3B299;
+    cursor: pointer;
+}
+
+.markspan{
+    color: #D61E11/*#92140C*//*A63446*/;
+    font-weight: bold;
+}
+
+.allmarks{
+    font-size: 20px;
+    width: 80%;
+    border: 1px solid white;
+    padding: 10px;
+    text-align: left;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    /*text-align: center;*/
+}
+
+.doneallspan{
+    margin: 20px;
+    margin-top: 50%;
+    color: #718792;
+    text-align: center;
+    font-size: 20px;
+}
+
+
+.container {
+    display: block;
+    position: relative;
+    text-align: left;
+    padding-left: 35px;
+/*    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;*/
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 20px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #1E1E29;
+    /*opacity: 0.3;*/
+}
+
+
+.container:hover input ~ .checkmark {
+}
+
+
+.container input:checked ~ .checkmark {
+    background-color: #1E1E29;
+    opacity: 1;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.container .checkmark:after {
+/*    top: 9px;
+    left: 9px;
+    width: 8px;
+    height: 8px;*/
+    left: 5px;
+    color: white;
+    content: "✓";
+}
