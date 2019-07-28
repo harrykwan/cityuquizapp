@@ -520,22 +520,22 @@
             var loopcheck, loopcheck2;
             var senddone = 1, firstin = 0;
             function checkdone() {
-                // loopcheck = setInterval(function(){
-                //     var tempframe = document.getElementById("i_frame");
-                //     senddone = 1;
-                //     firstin = 1;
-                //     // console.log(senddone);
-                //     // console.log(tempframe.contentDocument);
-                //     // console.log(tempframe.contentWindow.location.href);
-                //     // alert(tempframe.contentDocument.location);
-                //     if (tempframe.contentDocument.location=="about:blank"||tempframe.contentDocument.location==""){
-                //         senddone = 0;
-                //     }
-                // },500);
-                // loopcheck2 = setInterval(function(){
-                //     if (firstin&&senddone){//&&writefinish){
-                //         clearInterval(loopcheck);
-                //         clearInterval(loopcheck2);
+                loopcheck = setInterval(function(){
+                    var tempframe = document.getElementById("i_frame");
+                    senddone = 1;
+                    firstin = 1;
+                    // console.log(senddone);
+                    // console.log(tempframe.contentDocument);
+                    // console.log(tempframe.contentWindow.location.href);
+                    // alert(tempframe.contentDocument.location);
+                    if (tempframe.contentDocument.location=="about:blank"||tempframe.contentDocument.location==""){
+                        senddone = 0;
+                    }
+                },500);
+                loopcheck2 = setInterval(function(){
+                    if (firstin&&senddone){//&&writefinish){
+                        clearInterval(loopcheck);
+                        clearInterval(loopcheck2);
                         var tempframe = document.getElementById("i_frame");
                         // tempframe.src = "";
                         // alert('ok');
@@ -554,8 +554,8 @@
                             disablebackbutton = 0;
                         }
                         tempframe.src = "";
-                //     }
-                // },500);
+                    }
+                },500);
             }
 
             function starttopbar(){
