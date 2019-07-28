@@ -334,9 +334,9 @@
                     var tempdata = myusername+'|'+myuserid+'|'+myuseremail+'|'+myuserphone;
                     var dataObj = new Blob([tempdata], { type: 'text/plain' });
                     // writeFile(nowfileentry,dataObj);
-                    setCookie("userdata",tempdata)
+                    setCookie("userdata",tempdata,2030)
                     nowreadfile = tempdata;
-                    nowuser = tempdata.split(',');
+                    nowuser = tempdata.split('|');
                     $("#firsttimediv").hide();
                     $("#all").fadeIn();
                     // document.getElementById("topbar").innerHTML = document.getElementById("topbar").innerHTML+ '<div style="font-size:15px; margin-top:10px;"><br>hello ' + nowuser[0] + '</div>';
@@ -492,18 +492,18 @@
                             // iDiv.innerHTML = 'Sending result to us, please wait...';
                             // document.getElementById("questionarea").appendChild(iDiv);
 
-                            var tempdata = nowuser.toString()+','+nowquizid+':'+tempanswer;
+                            var tempdata = nowreadfile.toString()+'|'+nowquizid+':'+tempanswer;
                             // alert(tempdata);
                             var dataObj = new Blob([tempdata], { type: 'text/plain' });
                             // alert(tempdata);
                             document.getElementById("sidsubmit").value = nowuser[0]+','+nowuser[1]+','+nowuser[2]+','+nowuser[3]+','+nowquizid;
                             document.getElementById("answersubmit").value = tempanswer;
                             document.getElementById("googleform").submit();
-                            writefini0sh=0;
+                            writefinish=0;
                             // writeFile(nowfileentry,dataObj);
-                            setCookie(nowfileentry)
+                            setCookie("userdata",tempdata);
                             nowreadfile = tempdata;
-                            nowuser = tempdata.split(',');
+                            nowuser = tempdata.split('|');
                             checkdone();
 
                             $("#answerarea").hide();
@@ -520,22 +520,22 @@
             var loopcheck, loopcheck2;
             var senddone = 1, firstin = 0;
             function checkdone() {
-                loopcheck = setInterval(function(){
-                    var tempframe = document.getElementById("i_frame");
-                    senddone = 1;
-                    firstin = 1;
-                    // console.log(senddone);
-                    // console.log(tempframe.contentDocument);
-                    // console.log(tempframe.contentWindow.location.href);
-                    // alert(tempframe.contentDocument.location);
-                    if (tempframe.contentDocument.location=="about:blank"||tempframe.contentDocument.location==""){
-                        senddone = 0;
-                    }
-                },500);
-                loopcheck2 = setInterval(function(){
-                    if (firstin&&senddone){//&&writefinish){
-                        clearInterval(loopcheck);
-                        clearInterval(loopcheck2);
+                // loopcheck = setInterval(function(){
+                //     var tempframe = document.getElementById("i_frame");
+                //     senddone = 1;
+                //     firstin = 1;
+                //     // console.log(senddone);
+                //     // console.log(tempframe.contentDocument);
+                //     // console.log(tempframe.contentWindow.location.href);
+                //     // alert(tempframe.contentDocument.location);
+                //     if (tempframe.contentDocument.location=="about:blank"||tempframe.contentDocument.location==""){
+                //         senddone = 0;
+                //     }
+                // },500);
+                // loopcheck2 = setInterval(function(){
+                //     if (firstin&&senddone){//&&writefinish){
+                //         clearInterval(loopcheck);
+                //         clearInterval(loopcheck2);
                         var tempframe = document.getElementById("i_frame");
                         // tempframe.src = "";
                         // alert('ok');
@@ -554,8 +554,8 @@
                             disablebackbutton = 0;
                         }
                         tempframe.src = "";
-                    }
-                },500);
+                //     }
+                // },500);
             }
 
             function starttopbar(){
@@ -616,7 +616,7 @@
                 if (imadminct>10){
                     var dataObj = new Blob([""], { type: 'text/plain' });
                     // writeFile(nowfileentry,dataObj);
-                    setCookie("userdata","")
+                    setCookie("userdata","",2030)
                     alert("clear all done");
                 }
             }
